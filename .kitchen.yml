@@ -3,6 +3,7 @@ driver:
   # name: ec2
   name: docker
   use_sudo: false
+  binary: /usr/bin/docker  
 
 provisioner:
   name: chef_zero
