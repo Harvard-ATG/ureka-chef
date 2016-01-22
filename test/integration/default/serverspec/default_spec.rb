@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 packages = ['perl', 'tcsh', 'vim', 'nano', 'tar']
 
 packages.each{|p|
@@ -11,5 +10,5 @@ packages.each{|p|
 
 describe user('ureka_user') do
   it { should have_login_shell '/bin/tcsh' }
-  it { should have_have_home_directory '/home/ureka_user'
+  it { should have_have_home_directory '/home/ureka_user' }
 end
