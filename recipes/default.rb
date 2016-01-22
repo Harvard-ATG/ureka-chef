@@ -34,7 +34,7 @@ bash 'install ureka' do
 end
 
 user 'ureka_user' do
-  comment "Ureka Test User"
-  home "/home/ureka_user"
-  shell "/bin/tcsh"
+  comment 'Ureka Test User'
+  home '/home/ureka_user'
+  shell '/bin/tcsh'
 end

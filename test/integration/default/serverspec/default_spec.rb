@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-packages = ['perl', 'tcsh', 'vim', 'nano', 'tar']
+packages = %w(perl tcsh vim nano tar)
 
-packages.each{|p|
+packages.each do |p|
   describe package(p) do
     it { should be installed }
   end
-}
+end
 
 describe user('ureka_user') do
   it { should have_login_shell '/bin/tcsh' }

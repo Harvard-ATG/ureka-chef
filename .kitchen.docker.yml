@@ -1,4 +1,4 @@
-ver:
+driver:
   name: docker
   use_sudo: false
 
