@@ -1,0 +1,6 @@
+ver:
+  name: docker
+  use_sudo: false
+
+platforms:
+  - name: centos-7.1
