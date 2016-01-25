@@ -1,6 +1,6 @@
 ---
 driver:
-  name: vagrant
+  name: docker
   use_sudo: false
 
 provisioner:
@@ -12,13 +12,16 @@ provisioner:
 #   name: inspec
 
 platforms:
-  - name: cent7
+  - name: centos
+    driver_config:
+      image: centos
+      platform: rhel
 
 suites:
   - name: default
     run_list:
-      - recipe[ureka::default]
       - recipe[ssh::default]
+      - recipe[ureka::default]
     attributes: 
       ssh:
         options': {'Compression': 'yes', 'ForwardX11': 'yes'}
