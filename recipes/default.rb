@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: eurka
+# Cookbook Name:: ureka
 # Recipe:: default
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.

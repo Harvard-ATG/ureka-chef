@@ -17,7 +17,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[eurka::default]
+      - recipe[ureka::default]
       - recipe[ssh::default]
     attributes: 
       ssh:

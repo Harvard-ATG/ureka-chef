@@ -1,9 +1,9 @@
-name 'eurka'
+name 'ureka'
 maintainer 'Harvard ATG'
 maintainer_email 'you@example.com'
 license 'all_rights'
-description 'Installs/Configures eurka'
-long_description 'Installs/Configures eurka'
+description 'Installs/Configures ureka'
+long_description 'Installs/Configures ureka'
 version '0.1.0'
 
 depends 'yum', '~> 3.5.2'
