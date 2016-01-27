@@ -28,7 +28,7 @@ include_recipe 'build-essential::default'
 include_recipe 'python::pip'
 
 # Install Yum packages
-packages = %w(perl tcsh vim nano tar libX11 libXt-devel wget bc curl tcl tk tcl-devel tk-devel gdk-pixbuf2 gtk2-2.24.22-5.el7.x86_64 libgdk-x11-2.0.so.0 libatk-1.0.so.0 librsvg-2.so.2 librsvg-2.so.2 sudo yum install libuuid)
+packages = %w(perl tcsh vim nano tar libX11 libXt-devel wget bc curl tcl tk tcl-devel tk-devel gdk-pixbuf2 gtk2 libgdk-x11-2.0.so.0 libatk-1.0.so.0 librsvg-2.so.2 librsvg-2.so.2 libuuid)
     
 packages.each do|p|
   package p
@@ -75,13 +75,20 @@ remote_file 'http://ssb.stsci.edu/ureka/dev/Ureka_linux-rhe6_64_dev.tar.gz' do
   action :create_if_missing
 end
 
+directory '/usr/local/'
+
 bash 'unarchive_source' do
   cwd ::File.dirname(ureka_filepath)
   code <<-EOH
-   tar -zxf #{::File.basename(ureka_filepath)} -C #{::File.dirname(ureka_filepath)}
-   Ureka/bin/ur_normalize -s
+   tar -zxf #{::File.basename(ureka_filepath)} -C #{::File.dirname(ureka_filepath)} &&
+   mv Ureka /usr/local
  EOH
   not_if { ::File.directory?("#{Chef::Config['file_cache_path'] || '/tmp'}/ureka") }
+end
+
+bash 'ur_normalize' do
+ cwd '/usr/local/Ureka'
+ code "./bin/ur_normalize -s"
 end
 
 bash 'run_ureka_setup' do
