@@ -4,6 +4,26 @@
 #
 # Copyright (c) 2016 Harvard ATG, All Rights Reserved.
 #
+
+def dl_tar (source, shortname)
+  filepath = "#{Chef::Config['file_cache_path'] || '/tmp'}/#{shortname}.tar.gz"
+
+  remote_file source do
+    source source
+    path filepath
+    action :create_if_missing
+  end
+
+  bash "unarchive_#{shortname}_source" do
+    cwd ::File.dirname(filepath)
+    code <<-EOH
+     tar -zxf #{::File.basename(filepath)} -C #{::File.dirname(filepath)}
+   EOH
+    not_if { ::File.directory?("#{Chef::Config['file_cache_path'] || '/tmp'}/#{shortname}") }
+  end
+  return filepath
+end
+
 include_recipe 'build-essential::default'
 include_recipe 'python::pip'
 
@@ -16,11 +36,19 @@ end
 
 # Install pip libs
 
-pips = %w(git+https://github.com/ericmandel/pyds9.git#egg=p)
+python_pip "git+https://github.com/ericmandel/pyds9.git"
 
-pips.each do|p|
-  python_pip p
+# install xpa
+xpa = dl_tar "https://github.com/ericmandel/xpa/archive/v2.1.17.tar.gz", "xpa"
+
+bash 'compile_nginx_source' do
+  cwd  ::File.dirname(xpa)
+  code <<-EOH
+    ./configure --with-tcl=/usr/lib64/ --with-tk=/usr/lib64/ --with-x11=/usr/lib64/ && make && make install
+  EOH
+  not_if 'xpainfo'
 end
+
 
 # create test user
 user 'ureka_user' do

@@ -8,4 +8,6 @@ version '0.1.0'
 
 depends 'yum', '~> 3.5.2'
 depends 'ssh', '~> 0.10.10'
+depends 'git'
 depends 'python', '~> 1.4.6'
+depends 'build-essential', '~> 2.2.4'
