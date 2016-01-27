@@ -26,4 +26,4 @@ suites:
       - recipe[ureka::default]
     attributes: 
       ssh:
-        options': {'Compression': 'yes', 'ForwardX11': 'yes'}
+        options': {'Compression': 'yes', 'ForwardX11': 'yes', 'X11UseLocalhost': 'yes', 'UsePAM': 'no'}

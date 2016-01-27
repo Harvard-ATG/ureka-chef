@@ -34,21 +34,32 @@ packages.each do|p|
   package p
 end
 
-# Install pip libs
-
-python_pip "git+https://github.com/ericmandel/pyds9.git"
 
 # install xpa
 xpa = dl_tar "https://github.com/ericmandel/xpa/archive/v2.1.17.tar.gz", "xpa"
 
-bash 'compile_nginx_source' do
-  cwd  ::File.dirname(xpa)
+bash 'compile_xpa_source' do
+  cwd  "#{::File.dirname(xpa)}/xpa-2.1.17"
   code <<-EOH
     ./configure --with-tcl=/usr/lib64/ --with-tk=/usr/lib64/ --with-x11=/usr/lib64/ && make && make install
   EOH
-  not_if 'xpainfo'
+  ##not_if 'xpainfo'
 end
 
+# install ds9
+ds9 = dl_tar 'http://ds9.si.edu/download/linux64/ds9.linux64.7.4.tar.gz', 'ds9'
+bash 'move_ds9' do
+  cwd ::File.dirname(ds9)
+  code "mv ds9 /usr/bin/"
+end
+
+
+# Install pip libs dependant on xpa
+
+python_pip "git+https://github.com/ericmandel/pyds9.git" do
+  not_if 'xpainfo'
+  action :install
+end
 
 # create test user
 user 'ureka_user' do
