@@ -13,6 +13,10 @@ describe user('ureka_user') do
   it { should have_have_home_directory '/home/ureka_user' }
 end
 
-describe command('xpainfo') do
+describe command('xpaget') do
+  its(:exit_status) { should eq 0 }
+end
+
+describe command('ds9') do
   its(:exit_status) { should eq 0 }
 end

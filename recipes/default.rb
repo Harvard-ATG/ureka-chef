@@ -54,7 +54,7 @@ bash 'move_ds9' do
 end
 
 
-# Install pip libs dependant on xpa
+# Install pip libs dependent on xpa
 
 python_pip "git+https://github.com/ericmandel/pyds9.git" do
   action :install
@@ -87,7 +87,7 @@ end
 bash 'run_ureka_setup' do
   cwd '/root'
   code <<-EOH
-    ["/bin/bash", "-c", "echo \"ur_setup common primary\" >> .profile"]
-    ["/bin/bash", "-c", "source .profile"]
+    echo "ur_setup common primary" >> .profile &&
+    source .profile
   EOH
 end
