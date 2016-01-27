@@ -28,7 +28,7 @@ include_recipe 'build-essential::default'
 include_recipe 'python::pip'
 
 # Install Yum packages
-packages = %w(perl tcsh vim nano tar libX11 libXt-devel wget bc curl tcl tk tcl-devel tk-devel gdk-pixbuf2 gtk2-2.24.22-5.el7 libgdk-x11-2.0.so.0 libatk-1.0.so.0 librsvg-2.so.2 librsvg-2.so.2 sudo yum install libuuid)
+packages = %w(perl tcsh vim nano tar libX11 libXt-devel wget bc curl tcl tk tcl-devel tk-devel gdk-pixbuf2 gtk2-2.24.22-5.el7.x86_64 libgdk-x11-2.0.so.0 libatk-1.0.so.0 librsvg-2.so.2 librsvg-2.so.2 sudo yum install libuuid)
     
 packages.each do|p|
   package p
