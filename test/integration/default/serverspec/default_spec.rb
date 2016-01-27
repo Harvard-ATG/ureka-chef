@@ -13,7 +13,7 @@ describe user('ureka_user') do
   it { should have_have_home_directory '/home/ureka_user' }
 end
 
-commands = w % (xpaget ds9 xgterm pyraf)
+commands = %w(xpaget ds9 xgterm pyraf)
 
 commands.each do|c|
   describe command(c) do
