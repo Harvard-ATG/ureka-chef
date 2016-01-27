@@ -2,15 +2,25 @@
 # Cookbook Name:: ureka
 # Recipe:: default
 #
-# Copyright (c) 2016 The Authors, All Rights Reserved.
+# Copyright (c) 2016 Harvard ATG, All Rights Reserved.
 #
 
-packages = %w(perl tcsh vim nano tar libx11-6 libXft2 lib32z1 wget bc curl)
+# Install Yum packages
+packages = %w(perl tcsh vim nano tar libX11 wget bc curl)
 
 packages.each do|p|
   package p
 end
 
+#Install pip libs
+
+pips = %w(libXft)
+
+pips.each do|p|
+  python_pip p
+end
+
+#create test user
 user 'ureka_user' do
   comment 'Ureka Test User'
   home '/home/ureka_user'
@@ -22,6 +32,7 @@ src_filepath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/ureka.tar.gz"
 remote_file 'http://ssb.stsci.edu/ureka/dev/Ureka_linux-rhe6_64_dev.tar.gz' do
  source 'http://ssb.stsci.edu/ureka/dev/Ureka_linux-rhe6_64_dev.tar.gz'
  path src_filepath
+ action :create_if_missing
 end
 
 bash 'unarchive_source' do

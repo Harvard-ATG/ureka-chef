@@ -21,6 +21,7 @@ suites:
   - name: default
     run_list:
       - recipe[ssh::default]
+      - recipe[python::default]
       - recipe[ureka::default]
     attributes: 
       ssh:
