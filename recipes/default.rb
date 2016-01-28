@@ -28,7 +28,9 @@ include_recipe 'build-essential::default'
 include_recipe 'python::pip'
 
 # Install Yum packages
-packages = %w(perl tcsh vim nano tar libX11 libXt-devel wget bc curl tcl tk tcl-devel tk-devel gdk-pixbuf2 gtk2 libgdk-x11-2.0.so.0 libatk-1.0.so.0 librsvg-2.so.2 librsvg-2.so.2 libuuid)
+packages = %w(perl tcsh vim nano tar libX11 libXt-devel wget bc curl tcl tk tcl-devel tk-devel gdk-pixbuf2 gtk2 libgdk-x11-2.0.so.0 libatk-1.0.so.0
+              librsvg-2.so.2 librsvg-2.so.2 libuuid
+ )
 
 packages.each do|p|
   package p
@@ -89,7 +91,7 @@ bash 'ur_normalize' do
   code './bin/ur_normalize -s'
 end
 
-commands = 'ur_setup common primary >> .profile' 'source .profile'
+commands = ['ur_setup common primary >> .profile', 'source .profile']
 
 commands.each do |c|
   bash 'c' do
