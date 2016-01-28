@@ -3,6 +3,7 @@ require 'foodcritic'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 require 'kitchen/rake_tasks'
+require 'kitchen'
 require 'drud'
 
 desc 'Generate the Readme.md file.'
@@ -27,3 +28,33 @@ task default: :test
 Kitchen::RakeTasks.new
 desc 'Alias for kitchen:all'
 task integration: 'kitchen:all'
+
+
+# Integration tests. Kitchen.ci
+namespace :integration do
+  desc 'Run Test Kitchen with Vagrant'
+  task :docker do
+    Kitchen.logger = Kitchen.default_file_logger
+    Kitchen::Config.new.instances.each do |instance|
+      instance.test(:always)
+    end
+  end
+
+  desc 'Run Test Kitchen with cloud plugins'
+  task :cloud do
+    run_kitchen = true
+    if ENV['TRAVIS'] == 'true' && ENV['TRAVIS_PULL_REQUEST'] != 'false'
+      run_kitchen = false
+    end
+
+    if run_kitchen
+      Kitchen.logger = Kitchen.default_file_logger
+      @loader = Kitchen::Loader::YAML.new(project_config: './.kitchen.cloud.yml')
+      config = Kitchen::Config.new(loader: @loader)
+      config.instances.each do |instance|
+        instance.test(:always)
+      end
+    end
+  end
+end
+
