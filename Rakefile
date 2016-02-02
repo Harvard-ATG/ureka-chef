@@ -32,7 +32,7 @@ task integration: 'kitchen:all'
 
 # Integration tests. Kitchen.ci
 namespace :integration do
-  desc 'Run Test Kitchen with Vagrant'
+  desc 'Run Test Kitchen with Docker'
   task :docker do
     Kitchen.logger = Kitchen.default_file_logger
     Kitchen::Config.new.instances.each do |instance|
@@ -40,8 +40,8 @@ namespace :integration do
     end
   end
 
-  desc 'Run Test Kitchen with cloud plugins'
-  task :cloud do
+  desc 'Run Test Kitchen with Amaon EC2'
+  task :ec2 do
     run_kitchen = true
     if ENV['TRAVIS'] == 'true' && ENV['TRAVIS_PULL_REQUEST'] != 'false'
       run_kitchen = false
@@ -49,7 +49,7 @@ namespace :integration do
 
     if run_kitchen
       Kitchen.logger = Kitchen.default_file_logger
-      @loader = Kitchen::Loader::YAML.new(project_config: './.kitchen.cloud.yml')
+      @loader = Kitchen::Loader::YAML.new(project_config: './.kitchen.ec2.yml')
       config = Kitchen::Config.new(loader: @loader)
       config.instances.each do |instance|
         instance.test(:always)
